@@ -37,14 +37,38 @@ function turnMove(indice, callback){
 		turn(indice, 'X', function(res) {
             callback(res);
         });
+
+        if (!checkTie()) {
+            turn(findMachineSpot(), 'O', function(res){
+                callback(res);
+            });
+        } else {
+            callback({draw: "It's a draw"});
+        }
 	}
 }
 
 function turn(indice, player, callback) {
     emptyBoard[indice] = player;
-    // console.log(emptyBoard);
     callback(emptyBoard);
 }
+
+function checkTie() {
+	if (emptySquares().length == 0) {
+		return true;
+	}
+	return false;
+}
+
+function emptySquares() {
+	return emptyBoard.filter(s => typeof s == 'number');
+}
+
+function findMachineSpot() {
+	return emptySquares()[0];
+}
+
+
 
 module.exports = {
     startGame,
