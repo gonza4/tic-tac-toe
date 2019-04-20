@@ -20,4 +20,24 @@ export class GameComponent implements OnInit {
       }
     })
   }
+
+  startGame(indice : number) {
+    this.gameService.postStartGame(indice).subscribe((resultado) => {
+      console.log(resultado);
+      
+      if(undefined !== resultado.resultado.draw) {
+        alert(resultado.draw);
+      } else if(undefined !== resultado.finish){
+        alert(resultado.finish);
+      } else {
+        this.cells = resultado.resultado;
+        
+        for (var i = 0; i < this.cells.length; i++) {
+          if ('number' === typeof this.cells[i]) {
+            this.cells[i] = '';
+          }
+        }
+      }
+    })
+  }
 }
