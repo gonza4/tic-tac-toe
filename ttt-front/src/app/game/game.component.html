@@ -1,21 +1,30 @@
 <h1 style="width: 100%; text-align: center" >Welcome to Tic Tac Toe game</h1>
 
 <br>
+<div class="container">
+  <table [ngClass]="{'game-finished': isGameFinish}" style="width:60%">
+    <tr>
+      <td id="cell0" (click)="startGame(0)" >{{ cells[0] }}</td>
+      <td id="cell1" (click)="startGame(1)" >{{ cells[1] }}</td>
+      <td id="cell2" (click)="startGame(2)" >{{ cells[2] }}</td>
+    </tr>
+    <tr>
+      <td id="cell3" (click)="startGame(3)" >{{ cells[3] }}</td>
+      <td id="cell4" (click)="startGame(4)" >{{ cells[4] }}</td>
+      <td id="cell5" (click)="startGame(5)" >{{ cells[5] }}</td>
+    </tr>
+    <tr>
+      <td id="cell6" (click)="startGame(6)" >{{ cells[6] }}</td>
+      <td id="cell7" (click)="startGame(7)" >{{ cells[7] }}</td>
+      <td id="cell8" (click)="startGame(8)" >{{ cells[8] }}</td>
+    </tr>
+  </table>
 
-<table [ngClass]="{'game-finished': isGameFinish}" style="width:60%">
-  <tr>
-    <td id="cell0" (click)="startGame(0)" >{{ cells[0] }}</td>
-    <td id="cell1" (click)="startGame(1)" >{{ cells[1] }}</td>
-    <td id="cell2" (click)="startGame(2)" >{{ cells[2] }}</td>
-  </tr>
-  <tr>
-    <td id="cell3" (click)="startGame(3)" >{{ cells[3] }}</td>
-    <td id="cell4" (click)="startGame(4)" >{{ cells[4] }}</td>
-    <td id="cell5" (click)="startGame(5)" >{{ cells[5] }}</td>
-  </tr>
-  <tr>
-    <td id="cell6" (click)="startGame(6)" >{{ cells[6] }}</td>
-    <td id="cell7" (click)="startGame(7)" >{{ cells[7] }}</td>
-    <td id="cell8" (click)="startGame(8)" >{{ cells[8] }}</td>
-  </tr>
-</table>
+  <div class="row">
+    <div class="col">Machine: O</div>
+    <div class="col">Human: X</div>
+    <div class="col">
+      <button (click)="ngOnInit()" type="button">Reload Game</button>
+    </div>
+  </div>
+</div>

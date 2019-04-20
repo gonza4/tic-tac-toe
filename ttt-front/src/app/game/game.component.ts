@@ -27,14 +27,14 @@ export class GameComponent implements OnInit {
     this.gameService.postStartGame(indice).subscribe((resultado) => {
       console.log(resultado);
       
-      if(undefined !== resultado.resultado.draw) {
-        this.isGameFinish = true;
-        
-        alert(resultado.draw);
-      } else if(undefined !== resultado.finish){
+      if(undefined !== resultado.finish || (undefined !== resultado.finish && undefined !== resultado.resultado.draw)) {
         this.isGameFinish = true;
 
         alert(resultado.finish);
+      } else if(undefined !== resultado.resultado.draw){
+        this.isGameFinish = true;
+        
+        alert(resultado.draw);
       } else {
         this.cells = resultado.resultado;
 
