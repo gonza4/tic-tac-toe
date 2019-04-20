@@ -11,19 +11,23 @@ const winRows = [
     [2, 4, 6],
 ];
 
-var humanMoves = [];
-var cumputerMoves = [];
 var emptyBoard;
 
 function startGame(req, res) {
     let indice = req.body.indice;
     var resultado;
+    var draw;
+    var finish;
 
     turnMove(indice, function(res) {
         resultado = res;
+        draw = res.draw;
+        if (undefined !== res.finish) {
+            finish = res.finish;
+        }
     });
 
-    res.status(200).send({resultado: resultado});
+    res.status(200).send({resultado: resultado, draw: draw, finish: finish});
 }
 
 function getBoard(req, res) {
@@ -50,7 +54,18 @@ function turnMove(indice, callback){
 
 function turn(indice, player, callback) {
     emptyBoard[indice] = player;
-    callback(emptyBoard);
+
+    checkWinner(emptyBoard, player, function(res){
+        if (res) {
+            gameOver(res, function(res){
+                if (undefined !== res) {
+                    callback({finish: res});
+                }
+            });
+        } else {
+            callback(emptyBoard);
+        }
+    })
 }
 
 function checkTie() {
@@ -68,7 +83,27 @@ function findMachineSpot() {
 	return emptySquares()[0];
 }
 
+function checkWinner(board, player, callback) {
+	let plays = board.reduce((a, e, i) => 
+		(e === player) ? a.concat(i) : a, []);
+    let gameWon = null;
+    
+	for (let [index, win] of winRows.entries()) {
+		if (win.every(elem => plays.indexOf(elem) > -1)) {
+			gameWon = {index: index, player: player};
+			break;
+		}
+	}
+	callback(gameWon);
+}
 
+function gameOver(gameWon, callback) {
+    if('X' === gameWon.player){
+        callback("¡You Win!");
+    } else {
+        callback("¡You Lose!");
+    }
+}
 
 module.exports = {
     startGame,
