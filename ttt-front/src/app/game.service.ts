@@ -17,7 +17,7 @@ export class GameService {
   }
 
   getBoard() : Observable <any> {
-    let route = 'http://localhost:4000/api/board';
+    let route = 'http://ec2-13-59-24-144.us-east-2.compute.amazonaws.com:4000/api/board';
     
     return this.httpClient.get<any>(route, {
       headers: this.setHeader()
@@ -25,7 +25,7 @@ export class GameService {
   }
 
   postStartGame(indice) : Observable <any> {
-    let route = 'http://localhost:4000/api/game/start';
+    let route = 'http://ec2-13-59-24-144.us-east-2.compute.amazonaws.com:4000/api/game/start';
     
     return this.httpClient.post<any>(route, {indice}, {
       headers: this.setHeader()
