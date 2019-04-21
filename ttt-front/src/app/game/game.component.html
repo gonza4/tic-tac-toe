@@ -2,7 +2,7 @@
 
 <br>
 <div class="container">
-  <table [ngClass]="{'game-finished': isGameFinish}" style="width:60%">
+  <table data-toggle="tooltip" title="Click on any cell to play" [ngClass]="{'game-finished': isGameFinish}" style="width:60%">
     <tr>
       <td id="cell0" (click)="startGame(0)" >{{ cells[0] }}</td>
       <td id="cell1" (click)="startGame(1)" >{{ cells[1] }}</td>
