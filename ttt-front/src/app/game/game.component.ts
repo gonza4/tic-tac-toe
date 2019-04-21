@@ -13,8 +13,8 @@ export class GameComponent implements OnInit {
   constructor(private gameService: GameService) { }
 
   ngOnInit() {
-    this.gameService.getBoard().subscribe((resultado) => {
-      this.cells = resultado.resultado;
+    this.gameService.getBoard().subscribe((result) => {
+      this.cells = result.result;
       this.isGameFinish = false;
 
       for (var i = 0; i < this.cells.length; i++) {
@@ -24,19 +24,18 @@ export class GameComponent implements OnInit {
   }
 
   startGame(indice : number) {
-    this.gameService.postStartGame(indice).subscribe((resultado) => {
-      console.log(resultado);
+    this.gameService.postStartGame(indice).subscribe((result) => {
       
-      if(undefined !== resultado.finish || (undefined !== resultado.finish && undefined !== resultado.resultado.draw)) {
+      if(undefined !== result.finish || (undefined !== result.finish && undefined !== result.result.draw)) {
         this.isGameFinish = true;
 
-        alert(resultado.finish);
-      } else if(undefined !== resultado.resultado.draw){
+        alert(result.finish);
+      } else if(undefined !== result.result.draw){
         this.isGameFinish = true;
         
-        alert(resultado.draw);
+        alert(result.draw);
       } else {
-        this.cells = resultado.resultado;
+        this.cells = result.result;
 
         for (var i = 0; i < this.cells.length; i++) {
           if ('number' === typeof this.cells[i]) {

@@ -12,28 +12,45 @@ const winRows = [
 ];
 
 var emptyBoard;
+var Play = require('../models/play');
 
 function startGame(req, res) {
     let indice = req.body.indice;
-    var resultado;
+    var result;
     var draw;
     var finish;
 
     turnMove(indice, function(res) {
-        resultado = res;
+        result = res;
         draw = res.draw;
         if (undefined !== res.finish) {
             finish = res.finish;
         }
     });
+    
+    saveResult(result)
+    
+    res.status(200).send({result: result, draw: draw, finish: finish});
+}
 
-    res.status(200).send({resultado: resultado, draw: draw, finish: finish});
+function saveResult(result){
+    var play = new Play({
+        result: result
+    });
+
+    play.save(function (err, play) {
+      if (err) {
+          console.log(err);
+      } else {
+          console.log(play);
+      }
+    });
 }
 
 function getBoard(req, res) {
     emptyBoard = Array.from(Array(9).keys());
 
-    res.status(200).send({resultado: emptyBoard})
+    res.status(200).send({result: emptyBoard})
 }
 
 function turnMove(indice, callback){
